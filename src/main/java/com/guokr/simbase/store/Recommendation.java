@@ -1,5 +1,6 @@
 package com.guokr.simbase.store;
 
+import gnu.trove.map.TIntObjectMap;
 
 public class Recommendation implements IRecommendation {
 	private int recNum;
