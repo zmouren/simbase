@@ -54,6 +54,21 @@ public class TestRecommendation {
 	}
 
 	@Test
+	public void testAdd5() {
+		for (int i = 50; i < 100; i++) {
+			rec.add(i, i);
+		}
+		for (int i = 50; i < 100; i++) {
+			rec.remove(i);
+		}
+		for (int i = 1; i < 50; i++) {
+			rec.add(i, i);
+		}
+		Assert.assertEquals(89, rec.getWaterline(), 0.01);
+		Assert.assertEquals(0, rec.ids().length);
+	}
+
+	@Test
 	public void testRemove() {
 		rec.add(0, 1.0f);
 		rec.remove(0);

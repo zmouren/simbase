@@ -18,6 +18,10 @@ public class Recommendation {
 	void setLimit(int v) {
 		limit = v;
 	}
+	
+	float getWaterline() {
+		return waterline;
+	}
 
 	/*
 	 * score越高，表示越相近，waterline是当前门槛
