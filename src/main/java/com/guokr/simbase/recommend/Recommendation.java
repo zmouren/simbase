@@ -8,51 +8,49 @@ public class Recommendation {
 	private int limit;
 	private TIntFloatHashMap items;
 	private float waterline;
-	private int waterlineId;
 
 	public Recommendation(SimContext simContext) {
 		limit = simContext.getInt("limit");
 		items = new TIntFloatHashMap();
 		waterline = 0;
-		waterlineId = 0;
-	}
-
-	/*
-	 * 更新水位线
-	 */
-	private void updateWaterline() {
-		int[] ids = items.keys();
-		waterline = Float.MIN_VALUE;
-		for (int id : ids) {
-			float v = items.get(id);
-			if (v > waterline) {
-				waterline = v;
-				waterlineId = id;
-			}
-		}
 	}
 
 	void setLimit(int v) {
 		limit = v;
 	}
 
+	/*
+	 * score越高，表示越相近，waterline是当前门槛
+	 */
 	public void add(int vecid, float score) {
-		if (items.size() < limit) {
+		if (score > waterline && items.size() < limit) {
 			items.put(vecid, score);
-			if (score > waterlineId) {
-				waterline = score;
-				waterlineId = vecid;
+			return;
+		}
+
+		if (score > waterline && items.size() == limit) {
+			int[] ids = items.keys();
+			float min = score;
+			int minId = -1;
+			for (int id : ids) {
+				float v = items.get(id);
+				if (v < min) {
+					min = v;
+					minId = id;
+				}
 			}
-		} else if (score < waterline) {
-			items.remove(waterlineId);
-			items.put(vecid, score);
-			updateWaterline();
+
+			if (minId >= 0) {
+				items.remove(minId);
+				items.put(vecid, score);
+				waterline = min; // 第21个作为水位线
+			}
+			return;
 		}
 	}
 
 	public void remove(int vecid) {
 		items.remove(vecid);
-		updateWaterline();
 	}
 
 	public int[] ids() {
