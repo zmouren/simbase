@@ -1,10 +1,8 @@
-package com.guokr.simbase.store;
+package com.guokr.simbase.recommend;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.guokr.simbase.store.FloatPriorityQueue;
 
 public class TestFloatPriorityQueue {
 	private FloatPriorityQueue queue;

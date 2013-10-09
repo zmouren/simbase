@@ -1,4 +1,4 @@
-package com.guokr.simbase.store;
+package com.guokr.simbase.recommend;
 
 import java.util.NoSuchElementException;
 
@@ -11,6 +11,10 @@ public class FloatPriorityQueue {
 	private float[] pq; // store items at indices 1 to N
 	private int N; // number of items on priority queue
 	private boolean ascend;
+
+	public FloatPriorityQueue() {
+		this(10, true);
+	}
 
 	public FloatPriorityQueue(int initCapacity, boolean ascend) {
 		pq = new float[initCapacity + 1];
